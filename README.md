@@ -22,6 +22,12 @@
 make init
 </code></pre>
 
+<p>Запуск слушателя очереди для асинхронной обработки заявок:</p>
+<pre><code>
+make shell-php
+php yii queue/listen -v
+</code></pre>
+
 <p>Примеры запросов:</p>
 <ul>
     <li>POST <code>/requests</code> — создание заявки</li>
