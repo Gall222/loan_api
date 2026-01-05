@@ -1,0 +1,33 @@
+upstream sockets {
+   server php:3000;
+}
+limit_conn_zone $binary_remote_addr zone=perip:10m;
+
+server {
+    listen 0.0.0.0:80;
+    root /var/www/public;
+    location / {
+        index index.php index.html;
+    }
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass php:3000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+    }
+}
+server {
+    listen 127.0.0.1;
+    server_name localhost;
+    root /var/www/public;
+
+    location / {
+        index index.php index.html;
+    }
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass php:3000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+    }
+}
